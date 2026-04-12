@@ -5,4 +5,6 @@ export interface IExaminationRepository {
   saveMany(examinations: Examination[]): Promise<Examination[]>;
   findById(id: string): Promise<Examination | null>;
   findAll(): Promise<Examination[]>;
+  delete(id: string): Promise<boolean>;
+  count(): Promise<number>;
 }

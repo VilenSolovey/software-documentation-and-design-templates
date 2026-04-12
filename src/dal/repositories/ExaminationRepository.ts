@@ -1,6 +1,7 @@
 import { injectable } from "tsyringe";
 import { DataSource } from "typeorm";
 import { Examination } from "../entities/Examination";
+import { Result } from "../entities/Result";
 import { IExaminationRepository } from "../interfaces/IExaminationRepository";
 import { appDataSource } from "../../data-source";
 
@@ -22,10 +23,57 @@ export class ExaminationRepository implements IExaminationRepository {
   }
 
   async findById(id: string): Promise<Examination | null> {
-    return this.ds.getRepository(Examination).findOneBy({ id });
+    return this.ds.getRepository(Examination).findOne({
+      where: { id },
+      relations: {
+        patient: true,
+        doctor: true,
+        result: {
+          medicalRecord: true,
+        },
+      },
+    });
   }
 
   async findAll(): Promise<Examination[]> {
-    return this.ds.getRepository(Examination).find();
+    return this.ds.getRepository(Examination).find({
+      relations: {
+        patient: true,
+        doctor: true,
+        result: {
+          medicalRecord: true,
+        },
+      },
+      order: {
+        date: "DESC",
+      },
+    });
+  }
+
+  async delete(id: string): Promise<boolean> {
+    return this.ds.transaction(async (manager) => {
+      const examination = await manager.getRepository(Examination).findOne({
+        where: { id },
+        relations: {
+          result: true,
+        },
+      });
+
+      if (!examination) {
+        return false;
+      }
+
+      await manager.getRepository(Examination).delete({ id });
+
+      if (examination.result?.id) {
+        await manager.getRepository(Result).delete({ id: examination.result.id });
+      }
+
+      return true;
+    });
+  }
+
+  async count(): Promise<number> {
+    return this.ds.getRepository(Examination).count();
   }
 }

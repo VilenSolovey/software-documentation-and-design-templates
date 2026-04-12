@@ -7,4 +7,7 @@ export const TOKENS = {
   IResultRepository: Symbol("IResultRepository"),
 
   IDataImportService: Symbol("IDataImportService"),
+  IExaminationService: Symbol("IExaminationService"),
+  IReferenceDataService: Symbol("IReferenceDataService"),
+  IExaminationWebController: Symbol("IExaminationWebController"),
 } as const;

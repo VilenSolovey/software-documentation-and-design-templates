@@ -22,10 +22,14 @@ export class DoctorRepository implements IDoctorRepository {
   }
 
   async findById(id: string): Promise<Doctor | null> {
-    return this.ds.getRepository(Doctor).findOneBy({ id });
+    return this.ds.getRepository(Doctor).findOne({
+      where: { id },
+    });
   }
 
   async findAll(): Promise<Doctor[]> {
-    return this.ds.getRepository(Doctor).find();
+    return this.ds.getRepository(Doctor).find({
+      order: { name: "ASC" },
+    });
   }
 }

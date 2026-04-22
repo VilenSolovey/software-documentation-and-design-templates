@@ -22,10 +22,16 @@ export class PatientRepository implements IPatientRepository {
   }
 
   async findById(id: string): Promise<Patient | null> {
-    return this.ds.getRepository(Patient).findOneBy({ id });
+    return this.ds.getRepository(Patient).findOne({
+      where: { id },
+      relations: { medicalRecord: true },
+    });
   }
 
   async findAll(): Promise<Patient[]> {
-    return this.ds.getRepository(Patient).find();
+    return this.ds.getRepository(Patient).find({
+      relations: { medicalRecord: true },
+      order: { name: "ASC" },
+    });
   }
 }

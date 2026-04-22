@@ -7,7 +7,7 @@
     "build": "tsc",
     "start": "ts-node -r tsconfig-paths/register src/index.ts",
     "generate-csv": "ts-node -r tsconfig-paths/register src/scripts/generateCsv.ts",
-    "seed": "ts-node -r tsconfig-paths/register src/index.ts"
+    "seed": "ts-node -r tsconfig-paths/register src/seed.ts"
   },
   "dependencies": {
     "reflect-metadata": "^0.2.2",

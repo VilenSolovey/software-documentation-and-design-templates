@@ -1,20 +1,22 @@
 {
-  "name": "payroll-export-strategy",
+  "name": "strategy-export-labs",
   "version": "1.0.0",
-  "description": "Payroll data exporter with configurable output strategies",
+  "description": "Strategy pattern exports for payroll and medical datasets",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
     "start": "ts-node -r tsconfig-paths/register src/index.ts",
     "generate-csv": "ts-node -r tsconfig-paths/register src/scripts/generateCsv.ts",
     "seed": "ts-node -r tsconfig-paths/register src/seed.ts",
+    "export:remote": "ts-node -r tsconfig-paths/register src/scripts/runRemoteConfigExport.ts",
     "payroll:download": "ts-node -r tsconfig-paths/register src/scripts/downloadPayrollDataset.ts",
     "payroll:run": "ts-node -r tsconfig-paths/register src/scripts/runPayrollExport.ts",
     "payroll:infra:up": "docker compose -f docker-compose.payroll.yml up -d",
     "payroll:infra:down": "docker compose -f docker-compose.payroll.yml down",
     "payroll:kafka:read": "docker exec -it payroll-kafka /opt/kafka/bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic citywide-payroll --from-beginning --timeout-ms 5000",
     "payroll:redis:clear": "docker exec -it payroll-redis redis-cli DEL citywide-payroll:rows",
-    "payroll:redis:read": "docker exec -it payroll-redis redis-cli LRANGE citywide-payroll:rows 0 -1"
+    "payroll:redis:read": "docker exec -it payroll-redis redis-cli LRANGE citywide-payroll:rows 0 -1",
+    "medical-export:run": "ts-node -r tsconfig-paths/register src/scripts/runMedicalExport.ts"
   },
   "dependencies": {
     "better-sqlite3": "^9.4.3",

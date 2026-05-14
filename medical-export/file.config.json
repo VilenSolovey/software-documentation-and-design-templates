@@ -1,0 +1,11 @@
+{
+  "processing": {
+    "maxRows": 10
+  },
+  "output": {
+    "strategy": "file",
+    "file": {
+      "outputFilePath": "data/medical-export/exported-medical-data.csv"
+    }
+  }
+}

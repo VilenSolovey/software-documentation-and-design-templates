@@ -1,0 +1,19 @@
+{
+  "dataset": {
+    "url": "https://data.cityofnewyork.us/resource/k397-673e.csv?$limit=20",
+    "localFilePath": "data/payroll-export/citywide-payroll.csv",
+    "downloadTimeoutMs": 30000
+  },
+  "processing": {
+    "outputFilePath": "data/payroll-export/processed-payroll-lines.txt",
+    "maxRows": 10
+  },
+  "output": {
+    "strategy": "kafka",
+    "kafka": {
+      "clientId": "payroll-exporter",
+      "brokers": ["127.0.0.1:9092"],
+      "topic": "citywide-payroll"
+    }
+  }
+}
